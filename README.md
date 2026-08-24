@@ -165,3 +165,14 @@ El proyecto contiene una carpeta `capturas` con evidencias del proceso de desarr
 - Aplicación funcionando en el emulador Android.
 - Funcionamiento del botón interactivo.
 - Instalación y utilización del paquete Google Fonts.
+
+---
+
+## Cómo ejecutar el proyecto
+
+Para ejecutar la aplicación se debe tener Flutter instalado y configurado.
+
+Desde la carpeta raíz del proyecto:
+
+```bash
+flutter pub get
