@@ -148,3 +148,10 @@ mi_app/
 ├── README.md
 ├── pubspec.yaml
 └── ...
+---
+
+## Estado del proyecto
+
+La aplicación ha sido desarrollada y probada correctamente en un emulador Android.
+
+El proyecto incluye las evidencias correspondientes al desarrollo y funcionamiento de la aplicación.
