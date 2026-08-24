@@ -155,3 +155,13 @@ mi_app/
 La aplicación ha sido desarrollada y probada correctamente en un emulador Android.
 
 El proyecto incluye las evidencias correspondientes al desarrollo y funcionamiento de la aplicación.
+
+## Evidencias
+
+El proyecto contiene una carpeta `capturas` con evidencias del proceso de desarrollo, incluyendo:
+
+- Ejecución de Flutter Doctor.
+- Proyecto desarrollado en Visual Studio Code.
+- Aplicación funcionando en el emulador Android.
+- Funcionamiento del botón interactivo.
+- Instalación y utilización del paquete Google Fonts.
