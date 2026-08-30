@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -24,6 +25,23 @@ class ProfileScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> abrirFlutter(BuildContext context) async {
+    final Uri url = Uri.parse('https://flutter.dev');
+
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No se pudo abrir el enlace'),
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -66,16 +84,19 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             const Divider(),
+
             const ListTile(
               leading: Icon(Icons.inventory_2),
               title: Text('Inventario'),
               subtitle: Text('Consulta de productos y stock'),
             ),
+
             const ListTile(
               leading: Icon(Icons.swap_vert),
               title: Text('Movimientos'),
               subtitle: Text('Registro de entradas y salidas'),
             ),
+
             const ListTile(
               leading: Icon(Icons.favorite),
               title: Text('Favoritos'),
@@ -83,7 +104,20 @@ class ProfileScreen extends StatelessWidget {
                 'Selección de productos mediante setState()',
               ),
             ),
+
             const Spacer(),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () => abrirFlutter(context),
+                icon: const Icon(Icons.open_in_new),
+                label: const Text('Visitar Flutter'),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
