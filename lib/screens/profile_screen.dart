@@ -9,10 +9,11 @@ class ProfileScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Acerca de la aplicación'),
+          title: const Text('Acerca de Gestor de Bodega'),
           content: const Text(
-            'Esta aplicación fue desarrollada en Flutter para gestionar '
-            'información básica de bodega, inventario y movimientos.',
+            'Gestor de Bodega es una aplicación desarrollada en Flutter '
+            'para consultar inventario, controlar entradas y salidas '
+            'y gestionar productos favoritos.',
           ),
           actions: [
             TextButton(
@@ -49,25 +50,27 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Perfil y aplicación'),
-        backgroundColor: Colors.indigo,
-        foregroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const CircleAvatar(
-              radius: 50,
-              backgroundColor: Colors.indigo,
-              child: Icon(
+            Container(
+              width: 105,
+              height: 105,
+              decoration: const BoxDecoration(
+                color: Color(0xFF8BC34A),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
                 Icons.warehouse,
-                size: 55,
-                color: Colors.white,
+                size: 58,
+                color: Colors.black87,
               ),
             ),
             const SizedBox(height: 16),
             const Text(
-              'Gestión de Bodega',
+              'Gestor de Bodega',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -75,7 +78,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             const Text(
-              'Control básico de inventario y movimientos',
+              'Control de inventario y movimientos',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.grey,
@@ -84,29 +87,33 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             const Divider(),
-
             const ListTile(
-              leading: Icon(Icons.inventory_2),
+              leading: Icon(
+                Icons.inventory_2,
+                color: Colors.green,
+              ),
               title: Text('Inventario'),
               subtitle: Text('Consulta de productos y stock'),
             ),
-
             const ListTile(
-              leading: Icon(Icons.swap_vert),
+              leading: Icon(
+                Icons.swap_vert,
+                color: Colors.green,
+              ),
               title: Text('Movimientos'),
               subtitle: Text('Registro de entradas y salidas'),
             ),
-
             const ListTile(
-              leading: Icon(Icons.favorite),
+              leading: Icon(
+                Icons.favorite,
+                color: Colors.red,
+              ),
               title: Text('Favoritos'),
               subtitle: Text(
                 'Selección de productos mediante setState()',
               ),
             ),
-
             const Spacer(),
-
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -115,9 +122,7 @@ class ProfileScreen extends StatelessWidget {
                 label: const Text('Visitar Flutter'),
               ),
             ),
-
             const SizedBox(height: 10),
-
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(

@@ -69,8 +69,6 @@ class _MovementsScreenState extends State<MovementsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movimientos'),
-        backgroundColor: Colors.indigo,
-        foregroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -79,7 +77,11 @@ class _MovementsScreenState extends State<MovementsScreen> {
             Card(
               child: ListTile(
                 leading: const CircleAvatar(
-                  child: Icon(Icons.arrow_downward),
+                  backgroundColor: Color(0xFFDCEFC7),
+                  child: Icon(
+                    Icons.arrow_downward,
+                    color: Colors.green,
+                  ),
                 ),
                 title: const Text('Entradas'),
                 subtitle: const Text('Productos recibidos'),
@@ -96,7 +98,11 @@ class _MovementsScreenState extends State<MovementsScreen> {
             Card(
               child: ListTile(
                 leading: const CircleAvatar(
-                  child: Icon(Icons.arrow_upward),
+                  backgroundColor: Color(0xFFDCEFC7),
+                  child: Icon(
+                    Icons.arrow_upward,
+                    color: Colors.green,
+                  ),
                 ),
                 title: const Text('Salidas'),
                 subtitle: const Text('Productos despachados'),

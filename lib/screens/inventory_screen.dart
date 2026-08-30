@@ -64,8 +64,6 @@ class _InventoryScreenState extends State<InventoryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Inventario'),
-        backgroundColor: Colors.indigo,
-        foregroundColor: Colors.white,
       ),
       body: ListView.separated(
         padding: const EdgeInsets.all(12),
@@ -78,11 +76,11 @@ class _InventoryScreenState extends State<InventoryScreen> {
             key: ValueKey(product.name),
             elevation: 2,
             child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.indigo.shade100,
-                child: const Icon(
+              leading: const CircleAvatar(
+                backgroundColor: Color(0xFFDCEFC7),
+                child: Icon(
                   Icons.inventory_2,
-                  color: Colors.indigo,
+                  color: Colors.green,
                 ),
               ),
               title: Text(

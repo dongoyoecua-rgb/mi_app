@@ -6,14 +6,13 @@ import 'profile_screen.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  static const Color verdeLima = Color(0xFF8BC34A);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gestión de Bodega'),
-        centerTitle: true,
-        backgroundColor: Colors.indigo,
-        foregroundColor: Colors.white,
+        title: const Text('Gestor de Bodega'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -36,8 +35,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
-            // Navegación a Inventario
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -49,14 +46,11 @@ class HomeScreen extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.inventory),
+                icon: const Icon(Icons.inventory_2),
                 label: const Text('Ver inventario'),
               ),
             ),
-
             const SizedBox(height: 8),
-
-            // Navegación a Movimientos
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -72,10 +66,7 @@ class HomeScreen extends StatelessWidget {
                 label: const Text('Ver movimientos'),
               ),
             ),
-
             const SizedBox(height: 8),
-
-            // Navegación a Perfil
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -91,9 +82,7 @@ class HomeScreen extends StatelessWidget {
                 label: const Text('Perfil y aplicación'),
               ),
             ),
-
             const SizedBox(height: 16),
-
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
@@ -145,34 +134,44 @@ class SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 42,
-              color: Colors.indigo,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              value,
-              style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
+      elevation: 3,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: HomeScreen.verdeLima,
+            width: 1.5,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 4),
+              Icon(
+                icon,
+                size: 42,
+                color: Colors.green,
               ),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 15,
+              const SizedBox(height: 12),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 5),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 15,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
