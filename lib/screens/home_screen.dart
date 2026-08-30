@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'inventory_screen.dart';
 import 'movements_screen.dart';
 import 'profile_screen.dart';
+import '../widgets/summary_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  static const Color verdeLima = Color(0xFF8BC34A);
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +34,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
+
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -50,7 +50,9 @@ class HomeScreen extends StatelessWidget {
                 label: const Text('Ver inventario'),
               ),
             ),
+
             const SizedBox(height: 8),
+
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -66,7 +68,9 @@ class HomeScreen extends StatelessWidget {
                 label: const Text('Ver movimientos'),
               ),
             ),
+
             const SizedBox(height: 8),
+
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -82,7 +86,9 @@ class HomeScreen extends StatelessWidget {
                 label: const Text('Perfil y aplicación'),
               ),
             ),
+
             const SizedBox(height: 16),
+
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
@@ -113,65 +119,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class SummaryCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final IconData icon;
-
-  const SummaryCard({
-    super.key,
-    required this.title,
-    required this.value,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: HomeScreen.verdeLima,
-            width: 1.5,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 4),
-              Icon(
-                icon,
-                size: 42,
-                color: Colors.green,
-              ),
-              const SizedBox(height: 12),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 15,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
