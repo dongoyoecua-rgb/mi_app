@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'inventory_screen.dart';
 import 'movements_screen.dart';
+import 'profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -34,9 +35,9 @@ class HomeScreen extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
 
-            // Botón para navegar a Inventario
+            // Navegación a Inventario
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -53,9 +54,9 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
 
-            // Botón para navegar a Movimientos
+            // Navegación a Movimientos
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -72,7 +73,26 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 8),
+
+            // Navegación a Perfil
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfileScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.person),
+                label: const Text('Perfil y aplicación'),
+              ),
+            ),
+
+            const SizedBox(height: 16),
 
             Expanded(
               child: GridView.count(
