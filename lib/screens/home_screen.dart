@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'inventory_screen.dart';
+import 'movements_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -35,6 +36,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
+            // Botón para navegar a Inventario
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -48,6 +50,25 @@ class HomeScreen extends StatelessWidget {
                 },
                 icon: const Icon(Icons.inventory),
                 label: const Text('Ver inventario'),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            // Botón para navegar a Movimientos
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MovementsScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.swap_vert),
+                label: const Text('Ver movimientos'),
               ),
             ),
 
@@ -127,7 +148,9 @@ class SummaryCard extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 15),
+              style: const TextStyle(
+                fontSize: 15,
+              ),
             ),
           ],
         ),

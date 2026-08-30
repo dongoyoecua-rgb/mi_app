@@ -75,6 +75,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
           final product = products[index];
 
           return Card(
+            key: ValueKey(product.name),
             elevation: 2,
             child: ListTile(
               leading: CircleAvatar(
@@ -101,7 +102,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   product.isFavorite
                       ? Icons.favorite
                       : Icons.favorite_border,
-                  color: product.isFavorite ? Colors.red : Colors.grey,
+                  color: product.isFavorite
+                      ? Colors.red
+                      : Colors.grey,
                 ),
               ),
             ),
