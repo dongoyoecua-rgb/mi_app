@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'inventory_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -33,6 +34,24 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const InventoryScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.inventory),
+                label: const Text('Ver inventario'),
+              ),
+            ),
+
+            const SizedBox(height: 20),
 
             Expanded(
               child: GridView.count(
