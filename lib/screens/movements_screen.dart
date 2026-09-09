@@ -1,41 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class MovementsScreen extends StatefulWidget {
+import '../providers/inventory_provider.dart';
+
+class MovementsScreen extends StatelessWidget {
   const MovementsScreen({super.key});
 
-  @override
-  State<MovementsScreen> createState() => _MovementsScreenState();
-}
-
-class _MovementsScreenState extends State<MovementsScreen> {
-  int entradas = 48;
-  int salidas = 32;
-
-  void registrarEntrada() {
-    setState(() {
-      entradas++;
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Entrada registrada correctamente'),
-      ),
-    );
-  }
-
-  void registrarSalida() {
-    setState(() {
-      salidas++;
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Salida registrada correctamente'),
-      ),
-    );
-  }
-
-  void mostrarConfirmacionSalida() {
+  void mostrarConfirmacionSalida(
+    BuildContext context,
+    InventoryProvider inventoryProvider,
+  ) {
     showDialog(
       context: context,
       builder: (context) {
@@ -54,7 +28,16 @@ class _MovementsScreenState extends State<MovementsScreen> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
-                registrarSalida();
+
+                inventoryProvider.registrarSalida();
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Salida registrada correctamente',
+                    ),
+                  ),
+                );
               },
               child: const Text('Confirmar'),
             ),
@@ -70,71 +53,96 @@ class _MovementsScreenState extends State<MovementsScreen> {
       appBar: AppBar(
         title: const Text('Movimientos'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  backgroundColor: Color(0xFFDCEFC7),
-                  child: Icon(
-                    Icons.arrow_downward,
-                    color: Colors.green,
+      body: Consumer<InventoryProvider>(
+        builder: (context, inventoryProvider, child) {
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      backgroundColor: Color(0xFFDCEFC7),
+                      child: Icon(
+                        Icons.arrow_downward,
+                        color: Colors.green,
+                      ),
+                    ),
+                    title: const Text('Entradas'),
+                    subtitle: const Text('Productos recibidos'),
+                    trailing: Text(
+                      '${inventoryProvider.entradas}',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
-                title: const Text('Entradas'),
-                subtitle: const Text('Productos recibidos'),
-                trailing: Text(
-                  '$entradas',
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+
+                const SizedBox(height: 12),
+
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      backgroundColor: Color(0xFFDCEFC7),
+                      child: Icon(
+                        Icons.arrow_upward,
+                        color: Colors.green,
+                      ),
+                    ),
+                    title: const Text('Salidas'),
+                    subtitle: const Text('Productos despachados'),
+                    trailing: Text(
+                      '${inventoryProvider.salidas}',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Card(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  backgroundColor: Color(0xFFDCEFC7),
-                  child: Icon(
-                    Icons.arrow_upward,
-                    color: Colors.green,
+
+                const SizedBox(height: 24),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      inventoryProvider.registrarEntrada();
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Entrada registrada correctamente',
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.add),
+                    label: const Text('Registrar entrada'),
                   ),
                 ),
-                title: const Text('Salidas'),
-                subtitle: const Text('Productos despachados'),
-                trailing: Text(
-                  '$salidas',
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+
+                const SizedBox(height: 12),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      mostrarConfirmacionSalida(
+                        context,
+                        inventoryProvider,
+                      );
+                    },
+                    icon: const Icon(Icons.remove),
+                    label: const Text('Registrar salida'),
                   ),
                 ),
-              ),
+              ],
             ),
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: registrarEntrada,
-                icon: const Icon(Icons.add),
-                label: const Text('Registrar entrada'),
-              ),
-            ),
-            const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: mostrarConfirmacionSalida,
-                icon: const Icon(Icons.remove),
-                label: const Text('Registrar salida'),
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

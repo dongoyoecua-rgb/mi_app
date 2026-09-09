@@ -29,13 +29,35 @@ class InventoryProvider extends ChangeNotifier {
     ),
   ];
 
+  int _entradas = 48;
+  int _salidas = 32;
+
   List<Product> get products => _products;
 
   List<Product> get favoriteProducts =>
       _products.where((product) => product.isFavorite).toList();
 
+  int get entradas => _entradas;
+
+  int get salidas => _salidas;
+
+  int get totalProductos => _products.length;
+
+  int get stockTotal =>
+      _products.fold(0, (total, product) => total + product.stock);
+
   void toggleFavorite(Product product) {
     product.isFavorite = !product.isFavorite;
+    notifyListeners();
+  }
+
+  void registrarEntrada() {
+    _entradas++;
+    notifyListeners();
+  }
+
+  void registrarSalida() {
+    _salidas++;
     notifyListeners();
   }
 }
