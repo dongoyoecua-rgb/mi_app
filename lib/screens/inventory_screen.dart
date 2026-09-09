@@ -1,63 +1,11 @@
 import 'package:flutter/material.dart';
-import '../models/product.dart';
+import 'package:provider/provider.dart';
 
-class InventoryScreen extends StatefulWidget {
+import '../providers/inventory_provider.dart';
+import '../widgets/product_card.dart';
+
+class InventoryScreen extends StatelessWidget {
   const InventoryScreen({super.key});
-
-  @override
-  State<InventoryScreen> createState() => _InventoryScreenState();
-}
-
-class _InventoryScreenState extends State<InventoryScreen> {
-  final List<Product> products = [
-    Product(
-      name: 'Laptop Lenovo',
-      category: 'Tecnología',
-      stock: 8,
-      price: 650.00,
-    ),
-    Product(
-      name: 'Mouse inalámbrico',
-      category: 'Accesorios',
-      stock: 25,
-      price: 18.50,
-    ),
-    Product(
-      name: 'Teclado mecánico',
-      category: 'Accesorios',
-      stock: 15,
-      price: 45.00,
-    ),
-    Product(
-      name: 'Monitor 24 pulgadas',
-      category: 'Tecnología',
-      stock: 10,
-      price: 180.00,
-    ),
-    Product(
-      name: 'Cable HDMI',
-      category: 'Accesorios',
-      stock: 40,
-      price: 8.50,
-    ),
-  ];
-
-  void toggleFavorite(int index) {
-    setState(() {
-      products[index].isFavorite = !products[index].isFavorite;
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          products[index].isFavorite
-              ? '${products[index].name} agregado a favoritos'
-              : '${products[index].name} eliminado de favoritos',
-        ),
-        duration: const Duration(seconds: 1),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,47 +13,36 @@ class _InventoryScreenState extends State<InventoryScreen> {
       appBar: AppBar(
         title: const Text('Inventario'),
       ),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(12),
-        itemCount: products.length,
-        separatorBuilder: (context, index) => const Divider(),
-        itemBuilder: (context, index) {
-          final product = products[index];
+      body: Consumer<InventoryProvider>(
+        builder: (context, inventoryProvider, child) {
+          final products = inventoryProvider.products;
 
-          return Card(
-            key: ValueKey(product.name),
-            elevation: 2,
-            child: ListTile(
-              leading: const CircleAvatar(
-                backgroundColor: Color(0xFFDCEFC7),
-                child: Icon(
-                  Icons.inventory_2,
-                  color: Colors.green,
-                ),
-              ),
-              title: Text(
-                product.name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Text(
-                '${product.category}\n'
-                'Stock: ${product.stock} | \$${product.price.toStringAsFixed(2)}',
-              ),
-              isThreeLine: true,
-              trailing: IconButton(
-                onPressed: () => toggleFavorite(index),
-                icon: Icon(
-                  product.isFavorite
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: product.isFavorite
-                      ? Colors.red
-                      : Colors.grey,
-                ),
-              ),
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(
+              vertical: 8,
             ),
+            itemCount: products.length,
+            itemBuilder: (context, index) {
+              final product = products[index];
+
+              return ProductCard(
+                product: product,
+                onFavoritePressed: () {
+                  inventoryProvider.toggleFavorite(product);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        product.isFavorite
+                            ? '${product.name} agregado a favoritos'
+                            : '${product.name} eliminado de favoritos',
+                      ),
+                      duration: const Duration(seconds: 1),
+                    ),
+                  );
+                },
+              );
+            },
           );
         },
       ),

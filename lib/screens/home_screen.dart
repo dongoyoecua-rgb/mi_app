@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'favorites_screen.dart';
 import 'inventory_screen.dart';
 import 'movements_screen.dart';
 import 'profile_screen.dart';
@@ -48,6 +50,24 @@ class HomeScreen extends StatelessWidget {
                 },
                 icon: const Icon(Icons.inventory_2),
                 label: const Text('Ver inventario'),
+              ),
+            ),
+
+            const SizedBox(height: 8),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FavoritesScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.favorite),
+                label: const Text('Ver favoritos'),
               ),
             ),
 
