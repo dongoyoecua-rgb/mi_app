@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -13,7 +12,9 @@ class ProfileScreen extends StatelessWidget {
           content: const Text(
             'Gestor de Bodega es una aplicación desarrollada en Flutter '
             'para consultar inventario, controlar entradas y salidas '
-            'y gestionar productos favoritos.',
+            'y gestionar productos favoritos mediante Provider.\n\n'
+            'La aplicación funciona de forma local y no requiere conexión '
+            'a Internet para sus funciones principales.',
           ),
           actions: [
             TextButton(
@@ -26,23 +27,6 @@ class ProfileScreen extends StatelessWidget {
         );
       },
     );
-  }
-
-  Future<void> abrirFlutter(BuildContext context) async {
-    final Uri url = Uri.parse('https://flutter.dev');
-
-    if (!await launchUrl(
-      url,
-      mode: LaunchMode.externalApplication,
-    )) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('No se pudo abrir el enlace'),
-          ),
-        );
-      }
-    }
   }
 
   @override
@@ -87,22 +71,29 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             const Divider(),
+
             const ListTile(
               leading: Icon(
                 Icons.inventory_2,
                 color: Colors.green,
               ),
               title: Text('Inventario'),
-              subtitle: Text('Consulta de productos y stock'),
+              subtitle: Text(
+                'Consulta de productos, precios y stock',
+              ),
             ),
+
             const ListTile(
               leading: Icon(
                 Icons.swap_vert,
                 color: Colors.green,
               ),
               title: Text('Movimientos'),
-              subtitle: Text('Registro de entradas y salidas'),
+              subtitle: Text(
+                'Registro de entradas y salidas mediante Provider',
+              ),
             ),
+
             const ListTile(
               leading: Icon(
                 Icons.favorite,
@@ -110,19 +101,23 @@ class ProfileScreen extends StatelessWidget {
               ),
               title: Text('Favoritos'),
               subtitle: Text(
-                'Selección de productos mediante setState()',
+                'Selección de productos administrada con Provider',
               ),
             ),
+
+            const ListTile(
+              leading: Icon(
+                Icons.offline_bolt,
+                color: Colors.green,
+              ),
+              title: Text('Modo local'),
+              subtitle: Text(
+                'La aplicación funciona sin conexión a Internet',
+              ),
+            ),
+
             const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: () => abrirFlutter(context),
-                icon: const Icon(Icons.open_in_new),
-                label: const Text('Visitar Flutter'),
-              ),
-            ),
-            const SizedBox(height: 10),
+
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
