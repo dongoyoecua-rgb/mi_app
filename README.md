@@ -435,3 +435,433 @@ Se realizaron mas de diez commits para documentar progresivamente el desarrollo 
 La aplicacion Gestor de Bodega fue desarrollada, personalizada y probada correctamente en un emulador Android.
 
 El proyecto contiene navegacion entre cuatro pantallas, interacciones con el usuario, manejo de estado mediante setState, paquete externo, widgets reutilizables, personalizacion visual, logo propio, icono Android y evidencias de funcionamiento.
+
+---
+
+# Actividad Integradora 3
+
+## Gestor de Bodega - Implementacion de Provider
+
+### Descripcion
+
+Para la Actividad Integradora 3 se continuo desarrollando la aplicacion Gestor de Bodega creada en las actividades anteriores.
+
+En esta nueva version se mejoro la arquitectura del proyecto mediante la implementacion del paquete Provider para el manejo de estado, la creacion de nuevos widgets reutilizables y una mayor separacion de responsabilidades entre modelos, providers, pantallas y componentes visuales.
+
+La aplicacion permite administrar un inventario de productos, seleccionar productos favoritos, registrar movimientos de entrada y salida y visualizar indicadores actualizados desde un panel de control.
+
+La aplicacion fue desarrollada para funcionar de manera local, sin depender de conexion a Internet para sus funciones principales.
+
+---
+
+## Objetivo
+
+Desarrollar y mejorar una aplicacion movil utilizando Flutter, aplicando manejo de estado mediante Provider, organizacion del codigo en diferentes archivos y carpetas, widgets reutilizables, navegacion entre pantallas y control de versiones mediante Git y GitHub.
+
+---
+
+## Funcionalidades principales
+
+La aplicacion cuenta con las siguientes funcionalidades:
+
+- Visualizacion del inventario de productos.
+- Consulta de nombre, categoria, stock y precio.
+- Seleccion y eliminacion de productos favoritos.
+- Pantalla independiente para visualizar favoritos.
+- Registro de entradas de inventario.
+- Registro de salidas con ventana de confirmacion.
+- Actualizacion automatica de los indicadores del panel principal.
+- Navegacion entre las diferentes pantallas.
+- Mensajes de confirmacion mediante SnackBar.
+- Funcionamiento local sin necesidad de conexion a Internet.
+
+---
+
+## Pantallas de la aplicacion
+
+### 1. Inicio
+
+La pantalla principal funciona como panel de control de Gestor de Bodega.
+
+Permite acceder a:
+
+- Inventario.
+- Favoritos.
+- Movimientos.
+- Perfil y aplicacion.
+
+Tambien muestra indicadores dinamicos de:
+
+- Cantidad de productos.
+- Stock total.
+- Entradas.
+- Salidas.
+
+Estos valores son obtenidos directamente desde InventoryProvider.
+
+### 2. Inventario
+
+Presenta los productos mediante una lista dinamica.
+
+Cada producto contiene:
+
+- Nombre.
+- Categoria.
+- Stock.
+- Precio.
+- Boton de favorito.
+
+La pantalla utiliza Consumer para escuchar los cambios realizados en InventoryProvider.
+
+### 3. Favoritos
+
+Presenta solamente los productos marcados como favoritos.
+
+Cuando un producto es marcado como favorito desde Inventario, el cambio se almacena en el Provider y se refleja en esta pantalla.
+
+Tambien es posible eliminar un producto de favoritos y observar el cambio posteriormente en Inventario.
+
+### 4. Movimientos
+
+Permite registrar entradas y salidas de inventario.
+
+Los contadores son administrados mediante InventoryProvider.
+
+Al registrar un movimiento se ejecuta notifyListeners(), permitiendo que los cambios se reflejen tambien en el panel principal.
+
+### 5. Perfil y aplicacion
+
+Presenta informacion sobre Gestor de Bodega y sus principales funcionalidades.
+
+La pantalla tambien informa que la aplicacion utiliza Provider y que sus funciones principales trabajan de manera local.
+
+---
+
+## Implementacion de Provider
+
+Para la Actividad Integradora 3 se instalo el paquete:
+
+`provider`
+
+El manejo del estado principal se encuentra en:
+
+`lib/providers/inventory_provider.dart`
+
+InventoryProvider extiende ChangeNotifier y administra informacion compartida entre diferentes pantallas.
+
+Entre los estados administrados se encuentran:
+
+- Lista de productos.
+- Productos favoritos.
+- Cantidad de entradas.
+- Cantidad de salidas.
+- Cantidad total de productos.
+- Stock total.
+
+Para notificar los cambios se utiliza:
+
+```dart
+notifyListeners();
+```
+
+El Provider se registra en `main.dart` mediante:
+
+```dart
+ChangeNotifierProvider(
+  create: (_) => InventoryProvider(),
+  child: const MyApp(),
+)
+```
+
+Las pantallas pueden escuchar los cambios mediante:
+
+```dart
+Consumer<InventoryProvider>
+```
+
+Esto permite que un cambio realizado en una pantalla se refleje automaticamente en otros componentes de la aplicacion.
+
+---
+
+## Evidencia del manejo de estado
+
+Un ejemplo del funcionamiento de Provider es la administracion de favoritos.
+
+El flujo es:
+
+1. El usuario ingresa a Inventario.
+2. Selecciona el icono de corazon de un producto.
+3. Se ejecuta `toggleFavorite()`.
+4. InventoryProvider modifica el estado del producto.
+5. Se ejecuta `notifyListeners()`.
+6. La pantalla se reconstruye automaticamente.
+7. Al ingresar a Favoritos, el producto seleccionado aparece en la lista.
+
+El mismo principio se utiliza para las entradas y salidas.
+
+Cuando se registra una entrada o salida desde Movimientos, el panel principal muestra automaticamente los nuevos valores.
+
+---
+
+## Modelo de datos
+
+La aplicacion utiliza la clase:
+
+`Product`
+
+Ubicada en:
+
+`lib/models/product.dart`
+
+El modelo representa cada producto del inventario y contiene:
+
+```dart
+class Product {
+  final String name;
+  final String category;
+  int stock;
+  final double price;
+  bool isFavorite;
+}
+```
+
+Esto permite separar la representacion de los datos de la interfaz grafica.
+
+---
+
+## Widgets reutilizables
+
+Para evitar repetir codigo se implementaron widgets personalizados en archivos independientes.
+
+### ProductCard
+
+Ubicado en:
+
+`lib/widgets/product_card.dart`
+
+Este widget representa visualmente un producto y puede utilizarse tanto en Inventario como en Favoritos.
+
+Presenta:
+
+- Nombre.
+- Categoria.
+- Stock.
+- Precio.
+- Boton de favorito.
+
+### FavoriteButton
+
+Ubicado en:
+
+`lib/widgets/favorite_button.dart`
+
+Controla visualmente el estado favorito mediante un icono de corazon.
+
+### SummaryCard
+
+Ubicado en:
+
+`lib/widgets/summary_card.dart`
+
+Se utiliza en el panel principal para presentar los indicadores de productos, stock, entradas y salidas.
+
+---
+
+## Organizacion del proyecto
+
+La estructura principal utilizada en la Actividad Integradora 3 es:
+
+```text
+lib/
+|
+|-- main.dart
+|
+|-- models/
+|   |-- product.dart
+|
+|-- providers/
+|   |-- inventory_provider.dart
+|
+|-- screens/
+|   |-- home_screen.dart
+|   |-- inventory_screen.dart
+|   |-- favorites_screen.dart
+|   |-- movements_screen.dart
+|   |-- profile_screen.dart
+|
+|-- widgets/
+    |-- favorite_button.dart
+    |-- product_card.dart
+    |-- summary_card.dart
+```
+
+Esta organizacion permite separar las responsabilidades y evita concentrar toda la aplicacion dentro de `main.dart`.
+
+---
+
+## Navegacion
+
+La aplicacion utiliza:
+
+```dart
+Navigator.push()
+```
+
+junto con:
+
+```dart
+MaterialPageRoute
+```
+
+para navegar entre las diferentes pantallas.
+
+El usuario puede regresar utilizando el comportamiento de navegacion proporcionado por Navigator.
+
+---
+
+## Diseño de interfaz
+
+La aplicacion mantiene una identidad visual coherente relacionada con la gestion de bodegas.
+
+Se utiliza principalmente el color verde lima:
+
+`#8BC34A`
+
+La configuracion general se centraliza mediante `ThemeData`.
+
+La interfaz utiliza:
+
+- Cards.
+- Iconos.
+- Botones.
+- Listas dinamicas.
+- Espaciado consistente.
+- Bordes redondeados.
+- Indicadores visuales.
+- Mensajes SnackBar.
+- AlertDialog.
+
+Los elementos principales utilizados por la aplicacion son locales y no dependen de recursos externos para funcionar.
+
+---
+
+## Tecnologias y paquetes utilizados
+
+- Flutter.
+- Dart.
+- Provider.
+- Material Design.
+- Android Emulator.
+- Visual Studio Code.
+- Git.
+- GitHub.
+
+El paquete Provider es utilizado para el manejo centralizado del estado de la aplicacion.
+
+---
+
+## Ejecucion del proyecto
+
+Para ejecutar el proyecto se debe tener Flutter instalado y correctamente configurado.
+
+Instalar las dependencias:
+
+```bash
+flutter pub get
+```
+
+Comprobar el proyecto:
+
+```bash
+flutter analyze
+```
+
+Verificar los dispositivos disponibles:
+
+```bash
+flutter devices
+```
+
+Ejecutar la aplicacion:
+
+```bash
+flutter run
+```
+
+Durante las pruebas de la Actividad Integradora 3 se utilizo un emulador Pixel 6 con Android 15 API 35.
+
+---
+
+## Evidencias de la Actividad 3
+
+Las capturas de pantalla se encuentran en:
+
+`capturas_actividad3`
+
+### Pantalla de inicio
+
+![Inicio Actividad 3](capturas_actividad3/01_inicio.png)
+
+### Pantalla de inventario
+
+![Inventario Actividad 3](capturas_actividad3/02_inventario.png)
+
+### Producto marcado como favorito
+
+![Seleccion de favorito](capturas_actividad3/03_favorito_seleccionado.png)
+
+### Pantalla de favoritos
+
+![Favoritos con Provider](capturas_actividad3/04_favoritos.png)
+
+### Pantalla de movimientos
+
+![Movimientos](capturas_actividad3/05_movimientos.png)
+
+### Actualizacion de indicadores mediante Provider
+
+![Provider funcionando](capturas_actividad3/06_provider_actualizacion.png)
+
+### Pantalla de perfil
+
+![Perfil](capturas_actividad3/07_perfil.png)
+
+---
+
+## Control de versiones
+
+La Actividad Integradora 3 fue desarrollada en la rama:
+
+`actividad-integradora-3`
+
+Durante el desarrollo se realizaron commits significativos para registrar progresivamente la evolucion de la aplicacion.
+
+Entre los cambios realizados se encuentran:
+
+- Instalacion y configuracion de Provider.
+- Implementacion de InventoryProvider.
+- Creacion de widgets reutilizables.
+- Implementacion de favoritos mediante Provider.
+- Integracion de movimientos y panel principal con Provider.
+- Mejoras visuales y funcionamiento local.
+- Documentacion y evidencias finales.
+
+---
+
+## Autor
+
+**Gregorio Garzon**
+
+---
+
+## Estado del proyecto
+
+**Actividad Integradora 1:** Completada.
+
+**Actividad Integradora 2:** Completada.
+
+**Actividad Integradora 3:** Completada.
+
+Gestor de Bodega cuenta actualmente con una arquitectura organizada mediante modelos, providers, pantallas y widgets reutilizables.
+
+La aplicacion utiliza Provider para compartir y actualizar el estado entre diferentes componentes, mantiene navegacion entre sus pantallas y puede ejecutarse correctamente en un emulador Android.
